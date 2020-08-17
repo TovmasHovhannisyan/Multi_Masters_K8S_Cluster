@@ -1,0 +1,7 @@
+---
+
+ - set_fact:
+     kubeadm_join: "{{ hostvars['k8s-master-1']['kubeadm_join_cmd']['stdout'] }}"
+
+ - name: Join worker replicas to cluster
+   shell: "{{ kubeadm_join }}"

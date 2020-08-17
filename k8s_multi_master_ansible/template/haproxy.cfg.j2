@@ -1,0 +1,21 @@
+
+
+
+frontend kubernetes
+bind {{ hostvars['haproxy']['ansible_all_ipv4_addresses'] | ipaddr('private') | first }}:6443
+option tcplog
+mode tcp
+default_backend kubernetes-master-nodes
+
+
+backend kubernetes-master-nodes
+mode tcp
+balance roundrobin
+option tcp-check
+{% for item in groups['first_master'] %}
+server {{ hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_all_ipv4_addresses'] | ipaddr('private') | first }}:6443 check fall 3 rise 2
+{% endfor %}
+{% for item in groups['sec_masters'] %}
+server {{ hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_all_ipv4_addresses'] | ipaddr('private') | first }}:6443 check fall 3 rise 2
+{% endfor %}
+

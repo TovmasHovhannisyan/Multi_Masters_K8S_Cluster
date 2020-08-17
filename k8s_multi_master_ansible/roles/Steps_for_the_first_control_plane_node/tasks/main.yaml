@@ -1,0 +1,29 @@
+---
+
+
+ - name: Initialize the Kubernetes cluster using kubeadm
+   shell: kubeadm init --control-plane-endpoint "{{ hostvars['haproxy']['ansible_all_ipv4_addresses'] | ipaddr('private') | first }}" --upload-certs
+
+
+ - name: Setup kubeconfig for user
+   command: "{{ item }}"
+   with_items:
+    - mkdir -p $HOME/.kube
+    - cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    - chown $USER:$USER $HOME/.kube/config
+
+ - name: Generate master join token
+   shell: kubeadm token create --print-join-command
+   register: kubeadm_join_cmd
+ - debug: 
+     var: kubeadm_join_cmd.stdout
+
+  
+ - name: Re-upload the certificates and generate a new decryption key
+   shell: kubeadm init phase upload-certs --upload-certs | tail -1
+   register: kubeadm_cert_cmd 
+ - debug: 
+     var: kubeadm_cert_cmd.stdout
+
+ - name: Create network weave
+   shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"

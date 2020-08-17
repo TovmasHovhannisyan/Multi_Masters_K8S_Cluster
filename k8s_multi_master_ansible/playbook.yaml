@@ -1,0 +1,31 @@
+---
+
+ - name: setup pre-requisites
+   hosts: first_master:sec_masters:workers
+   become: yes
+   roles:
+     - Install_Packages
+
+ - name: Install and configure HAproxy
+   hosts: haproxy
+   become: yes
+   roles:
+     - HAproxy
+
+ - name: Initialize the first control plane node and create weave network
+   hosts: first_master
+   become: false 
+   roles:
+     - Steps_for_the_first_control_plane_node
+
+ - name: Join second master
+   hosts: sec_masters
+   become: false
+   roles:
+     - Join_second_master
+
+ - name: Join worker nodes
+   hosts: workers
+   become: false
+   roles:
+     - Join_worker

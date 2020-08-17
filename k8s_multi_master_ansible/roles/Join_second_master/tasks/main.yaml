@@ -1,0 +1,26 @@
+---
+
+ - name: show kubeadm_join_cmd
+   debug: 
+     var: hostvars['k8s-master-1']['kubeadm_join_cmd']['stdout']
+
+ - name: show kubeadm_cert_cmd
+   debug: 
+     var: hostvars['k8s-master-1']['kubeadm_cert_cmd']['stdout']
+
+
+ - set_fact:
+     kubeadm_join: "{{ hostvars['k8s-master-1']['kubeadm_join_cmd']['stdout'] }}"
+
+ - set_fact:
+     kubeadm_cert: "{{ hostvars['k8s-master-1']['kubeadm_cert_cmd']['stdout'] }}"
+
+ - name: Join Master replicas to cluster
+   shell: "{{ kubeadm_join }} --control-plane --certificate-key {{ kubeadm_cert }} "
+
+ - name: Setup kubeconfig for user
+   command: "{{ item }}"
+   with_items:
+    - mkdir -p $HOME/.kube
+    - cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    - chown $USER:$USER $HOME/.kube/config
