@@ -29,6 +29,6 @@ The usage of Terraform helps to create an inventory file for Ansible automatical
   
    * Execute the following command in k8s_multi_master_ansible/ directory: 
     ``` 
-    $ asnible-playbook -i hosts playbook.yaml 
+    $ ansible-playbook -i hosts playbook.yaml 
     ``` 
     > As we mentioned above the inventory file ("hosts") will be created automatically by Terraform after environment creation.
