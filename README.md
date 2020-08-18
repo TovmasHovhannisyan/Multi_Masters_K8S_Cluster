@@ -31,4 +31,4 @@ The usage of Terraform helps to create an inventory file for Ansible automatical
     ``` 
     $ asnible-playbook -i hosts playbook.yaml 
     ``` 
-    > As we mentioned above the inventory file ("hosts ") will be created automatically by Terraform after environment creation.
+    > As we mentioned above the inventory file ("hosts") will be created automatically by Terraform after environment creation.
