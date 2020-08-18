@@ -15,12 +15,12 @@ The usage of Terraform helps to create an inventory file for Ansible automatical
 1. Creating necessary compute resources:
  * Initialize the terraform with executing following command in  **Hetzner_terraform/** directory :
     ```
-     $ Terraform init 
+     $ terraform init 
     ```
  * Create all resources: 
    > You can check the exact resources that will be created due "Terraform apply" by using a command terraform plan.
     ```
-    $Terraform apply     
+    $ terraform apply     
     ```
     In the end, we will have 3 servers for master nodes, 3 servers for worker nodes, and one node for Haproxy. Also, we will have a private network where will be all our servers and SSH key for accessing those servers.
     > In our case, we will use HAProxy as TCP load balancer which will distribute traffic to all healthy control plane nodes in its target list.
@@ -29,6 +29,6 @@ The usage of Terraform helps to create an inventory file for Ansible automatical
   
    * Execute the following command in k8s_multi_master_ansible/ directory: 
     ``` 
-    $asnible-playbook -i hosts playbook.yaml 
+    $ asnible-playbook -i hosts playbook.yaml 
     ``` 
     > As we mentioned above the inventory file ("hosts ") will be created automatically by Terraform after environment creation.
