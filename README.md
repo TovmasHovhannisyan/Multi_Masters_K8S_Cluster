@@ -13,7 +13,7 @@ The usage of Terraform helps to create an inventory file for Ansible automatical
   > First of all, you need to mention the necessary values in **Multi_Masters_K8S Cluster/Hetzner Terraform/variables.tf** file (you must put there the API token that you will [generate](https://vocon-it.com/2018/03/21/testing-the-hetzner-cloud-api-via-curl-iaas-automation/) in your Hetzner account  ) .Also, you can change the default values for all variables in the same file, or you can give them new value in **Multi_Masters_K8S_Cluster/Hetzner_terraform/terraform.tfvars** which will overwrite the default values.
 
 1. Creating necessary compute resources:
- * Initialize the terraform with executing following command in  **Hetzner_terraform/** directory :
+ * Initialize the terraform with executing following command in  **Hetzner_terraform/** directory:
     ```
      $ terraform init 
     ```
